@@ -1,0 +1,21 @@
+vsftpd_service_enabled: YES
+vsftpd_service_state: started
+vsftpd_users:
+  - username: ndguest
+    name: FTP User
+    password: '$1$okndok$IS9WRVhk49QeLppgXjUmY.'
+vsftpd_config:
+  chroot_local_user: YES
+  allow_writeable_chroot: YES
+  local_root: /home/$USER
+  user_sub_token: $USER
+  log_ftp_protocol: YES
+  local_enable: YES
+  write_enable: YES
+  xferlog_enable: YES
+  listen_port: 21
+  pasv_enable: YES
+  pasv_promiscuous: NO
+  pasv_min_port: 42000
+  pasv_max_port: 42100
+  port_promiscuous: NO

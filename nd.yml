@@ -1,0 +1,17 @@
+---
+- hosts: nd
+  become: yes
+  roles:
+    - base
+    - keyboard
+    - apt
+    - ntp
+    - git
+    - vagrant
+    - ansible
+    - nodejs
+    - ruby
+    - nginx
+    - vsftpd
+    - jenkins
+    - { role: repos, become_user: nd }

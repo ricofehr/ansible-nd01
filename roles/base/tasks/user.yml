@@ -1,0 +1,28 @@
+---
+
+- name: Ensure admin group is present
+  group:
+    name: admin
+    state: present
+
+- name: Ensure nd group is present
+  group:
+    name: nd
+    state: present
+
+- name: Ensure nd user is present
+  user:
+    name: nd
+    state: present
+    shell: /bin/bash
+    groups:
+      - nd
+      - admin
+    createhome: yes
+    home: /home/nd
+
+- name: Set authorized key took from file
+  authorized_key:
+    user: nd
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

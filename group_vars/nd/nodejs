@@ -1,0 +1,5 @@
+nodejs_install_npm_user: nd
+npm_config_prefix: "/home/nd/npm"
+nodejs_npm_global_packages:
+  - ember-cli
+  - bower

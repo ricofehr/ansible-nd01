@@ -1,0 +1,5 @@
+/tmp/
+*.retry
+.vault_pass.txt
+/assets/*
+!/assets/.gitkeep

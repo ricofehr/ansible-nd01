@@ -1,0 +1,7 @@
+---
+
+- include_vars: "packages.yml"
+
+- name: Install packages
+  apt: name={{ item }} state=installed update_cache=true force=yes
+  with_items: "{{ packages }}"

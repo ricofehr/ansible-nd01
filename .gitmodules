@@ -1,0 +1,42 @@
+[submodule "roles/nginx"]
+	path = roles/nginx
+	url = https://github.com/geerlingguy/ansible-role-nginx
+[submodule "roles/vsftpd"]
+	path = roles/vsftpd
+	url = https://github.com/weareinteractive/ansible-vsftpd
+[submodule "roles/ntp"]
+	path = roles/ntp
+	url = https://github.com/geerlingguy/ansible-role-ntp
+[submodule "roles/apt"]
+	path = roles/apt
+	url = https://github.com/ANXS/apt
+[submodule "roles/git"]
+	path = roles/git
+	url = https://github.com/geerlingguy/ansible-role-git
+[submodule "roles/keyboard"]
+	path = roles/keyboard
+	url = https://github.com/gantsign/ansible-role-keyboard
+[submodule "roles/franklinkim.openssl"]
+	path = roles/franklinkim.openssl
+	url = https://github.com/weareinteractive/ansible-openssl
+[submodule "roles/nodejs"]
+	path = roles/nodejs
+	url = https://github.com/geerlingguy/ansible-role-nodejs
+[submodule "roles/ruby"]
+	path = roles/ruby
+	url = https://github.com/geerlingguy/ansible-role-ruby
+[submodule "roles/jenkins"]
+	path = roles/jenkins
+	url = https://github.com/geerlingguy/ansible-role-jenkins
+[submodule "roles/geerlingguy.java"]
+	path = roles/geerlingguy.java
+	url = https://github.com/geerlingguy/ansible-role-java
+[submodule "roles/vagrant"]
+	path = roles/vagrant
+	url = https://github.com/FGtatsuro/ansible-vagrant
+[submodule "roles/FGtatsuro.python-requirements"]
+	path = roles/FGtatsuro.python-requirements
+	url = https://github.com/FGtatsuro/ansible-python-requirements
+[submodule "roles/FGtatsuro.virtualbox"]
+	path = roles/FGtatsuro.virtualbox
+	url = https://github.com/FGtatsuro/ansible-virtualbox
