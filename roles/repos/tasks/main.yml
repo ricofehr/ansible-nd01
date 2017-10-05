@@ -85,6 +85,13 @@
     repo: https://github.com/ricofehr/ansible-nd01
     dest: /home/repos/ansible-nd01
 
+- name: Create local inventory
+  copy:
+    content: |
+             [nd]
+             "{{ inventory_hostname }}"
+    dest: /home/repos/ansible-nd01/inventory_local
+
 - name: Check if local secret file exists
   local_action: stat path=".vault_pass.txt"
   register: file
@@ -105,7 +112,7 @@
     name: "build ndio and docs"
     minute: "*/30"
     hour: "*"
-    job: "cd /home/repos/ansible-nd01 && ansible-playbook -i inventory nd01.yml"
+    job: "cd /home/repos/ansible-nd01 && ansible-playbook -i inventory_local nd01.yml --vault-password-file=.vault_pass.txt"
 
 - name: check if imgs repo exists
   local_action: stat path="assets/imgs"
