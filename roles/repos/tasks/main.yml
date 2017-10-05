@@ -89,7 +89,7 @@
   copy:
     content: |
              [nd]
-             "{{ inventory_hostname }}"
+             {{ inventory_hostname }}
     dest: /home/repos/ansible-nd01/inventory_local
 
 - name: Check if local secret file exists
