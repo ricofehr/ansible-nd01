@@ -1,6 +1,7 @@
 ---
 
 packages:
+    - sshpass
     - vim
     - htop
     - iotop

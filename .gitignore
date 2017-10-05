@@ -3,3 +3,4 @@
 .vault_pass.txt
 /assets/*
 !/assets/.gitkeep
+inventory_local

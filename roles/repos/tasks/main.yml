@@ -112,7 +112,7 @@
     name: "build ndio and docs"
     minute: "*/30"
     hour: "*"
-    job: "cd /home/repos/ansible-nd01 && ansible-playbook -i inventory_local nd01.yml --vault-password-file=.vault_pass.txt"
+    job: "cd /home/repos/ansible-nd01 && ansible-playbook -i inventory_local nd.yml --vault-password-file=.vault_pass.txt"
 
 - name: check if imgs repo exists
   local_action: stat path="assets/imgs"
