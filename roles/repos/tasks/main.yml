@@ -95,7 +95,8 @@
 - name: Check if local secret file exists
   local_action: stat path=".vault_pass.txt"
   register: file
-  become_user: root
+  become: no
+  sudo: no
 
 - name: Copy local secret file to remote if exists
   copy:
@@ -117,7 +118,8 @@
 - name: check if imgs repo exists
   local_action: stat path="assets/imgs"
   register: folder
-  become_user: root
+  become: no
+  sudo: no
 
 - name: copy local imgs repo to remote if exists
   copy:
@@ -132,7 +134,8 @@
 - name: check if pkgs repo exists
   local_action: stat path="assets/pkgs"
   register: folder
-  become_user: root
+  become: no
+  sudo: no
 
 - name: copy local pkgs repo to remote if exists
   copy:
@@ -147,7 +150,8 @@
 - name: check if jenkins jobs repo exists
   local_action: stat path="assets/jobs"
   register: folder
-  become_user: root
+  become: no
+  sudo: no
 
 - name: copy local jobs repo to remote if exists
   copy:

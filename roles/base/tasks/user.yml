@@ -22,6 +22,8 @@
     home: /home/nd
 
 - name: Check if pubkey file exists
+  become: no
+  sudo: no
   local_action: stat path="~/.ssh/id_rsa.pub"
   register: file
 
