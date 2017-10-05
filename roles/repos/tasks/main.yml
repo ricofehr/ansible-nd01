@@ -105,7 +105,7 @@
     name: "build ndio and docs"
     minute: "*/30"
     hour: "*"
-    job: "cd /home/repos/ansible-nd01 && ansible-playbook nd01.yml"
+    job: "cd /home/repos/ansible-nd01 && ansible-playbook -i inventory nd01.yml"
 
 - name: check if imgs repo exists
   local_action: stat path="assets/imgs"
