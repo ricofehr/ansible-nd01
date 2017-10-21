@@ -1,12 +1,6 @@
 jenkins_package_state: present
 jenkins_hostname: build.nextdeploy.io
-jenkins_admin_username: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          64393364326364353035313561626435373561336261643636626465613764393263383163323261
-          3339336266383566333435663063353439313430333763380a343566366362336630613332643831
-          31663138346432633865653965626266336566343362363130363166663232336665323330363533
-          6464326531613034350a373136336464336663346264356232363035613436333637393138646230
-          6663
+jenkins_admin_username: root
 jenkins_admin_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           33353936636332656339663530613230303032333664333964383362653236396537616535326630
@@ -15,14 +9,53 @@ jenkins_admin_password: !vault |
           3231663466316238340a396339613531333765623566323339313630613563626431386663333532
           3739
 jenkins_plugins:
+  - ace-editor
+  - analysis-core
   - ansicolor
+  - ant
+  - antisamy-markup-formatter
+  - apache-httpcomponents-client-4-api
+  - bouncycastle-api
   - brakeman
+  - branch-api
   - build-pipeline-plugin
+  - cloudbees-folder
+  - conditional-buildstep
+  - credentials
+  - display-url-api
   - envinject
+  - envinject-api
+  - external-monitor-job
   - git
+  - git-client
   - github
-  - parametrized-trigger
+  - github-api
+  - icon-shim
+  - jackson2-api
+  - javadoc
+  - jquery
+  - jsch
+  - junit
+  - ldap
+  - mailer
+  - matrix-auth
+  - matrix-project
+  - maven-plugin
+  - pam-auth
+  - parameterized-trigger
   - persistent-parameter
   - pipeline-build-step
+  - plain-credentials
+  - run-condition
+  - script-security
   - slack
   - ssh
+  - ssh-credentials
+  - structs
+  - token-macro
+  - windows-slaves
+  - workflow-api
+  - workflow-job
+  - workflow-scm-step
+  - workflow-step-api
+  - workflow-support

@@ -1,17 +1,24 @@
 ---
+
 - hosts: nd
+  serial: 1
+  max_fail_percentage: 0
   become: yes
   roles:
-    - base
-    - keyboard
-    - apt
-    - ntp
-    - git
-    - vagrant
-    - ansible
-    - nodejs
-    - ruby
-    - nginx
-    - vsftpd
-    - jenkins
-    - { role: repos, become_user: nd }
+   - base
+   - keyboard
+   - apt
+   - ntp
+   - git
+   - vagrant
+   - ansible
+   - nodejs
+   - ruby
+   - nginx
+   - vsftpd
+   - jenkins
+   - ndjobs
+   - repos
+   - elasticsearch
+   - logstash
+   - kibana

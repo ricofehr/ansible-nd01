@@ -33,3 +33,10 @@
     state: present
     key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
   when: file.stat.exists
+
+- name: Set authorized key took from file
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  when: file.stat.exists

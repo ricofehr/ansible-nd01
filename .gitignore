@@ -1,6 +1,8 @@
 /tmp/
 *.retry
 .vault_pass.txt
-/assets/*
-!/assets/.gitkeep
+/assets/imgs/*
+!/assets/imgs/.gitkeep
+/assets/pkgs/*
+!/assets/pkgs/.gitkeep
 inventory_local

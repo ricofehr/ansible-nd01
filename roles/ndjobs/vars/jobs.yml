@@ -1,0 +1,93 @@
+---
+
+jenkins_admin_user: root
+jenkins_admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33353936636332656339663530613230303032333664333964383362653236396537616535326630
+          3761653734623566326334393135326330613439616263660a636230373834313463353462323038
+          30636438323338306632366337626633373039343039323434316264356162656565316463313337
+          3231663466316238340a396339613531333765623566323339313630613563626431386663333532
+          3739
+
+packages:
+  - python-jenkins
+  - python-lxml
+
+jobs:
+  - check01-controller
+  - check02-neutron
+  - check03-glance
+  - check04-compute
+  - check05-nextdeploy
+  - deploy00-start
+  - deploy01-puppetstop
+  - deploy02-maintenance
+  - deploy03-backup
+  - deploy04-updatepuppet
+  - deploy05-updatenodes
+  - deploy06-pullnextdeploy
+  - deploy07-bundleinstall
+  - deploy08-rakemigrate
+  - deploy09-rebuildember
+  - deploy10-yardoc
+  - deploy11-restartpuma
+  - deploy12-memcached
+  - deploy13-gitlab
+  - deploy14-restartnginx
+  - deploy15-restartovpn
+  - deploy16-maintenanceoff
+  - deploy17-puppetstart
+  - deploy18-deploycli
+  - exploitation-backupnextdeploy
+  - exploitation-cleanossec
+  - exploitation-deployclitest
+  - exploitation-execpuppet
+  - exploitation-maintenance
+  - exploitation-rebootcompute
+  - exploitation-rebootcontroller
+  - exploitation-rebootglance
+  - exploitation-rebootneutron
+  - exploitation-rebootnextdeploy
+  - exploitation-restartcompute
+  - exploitation-restartcontroller
+  - exploitation-restartgitlab
+  - exploitation-restartglance
+  - exploitation-restartneutron
+  - exploitation-restartnextdeploy
+  - exploitation-restartnginx
+  - exploitation-restartovpn
+  - exploitation-restartpuma
+  - exploitation-updatenodes
+  - exploitation-updatepuppet
+  - install-controller
+  - install-glance
+  - install-ndc2
+  - install-neutron
+  - install-nextdeploy
+  - install-nova
+  - install-puppet
+  - log-controller
+  - nextdeploy
+  - rebootall01-controller
+  - rebootall02-neutron
+  - rebootall03-glance
+  - rebootall04-compute
+  - rebootall05-nextdeploy
+  - restartall01-controller
+  - restartall02-neutron
+  - restartall03-glance
+  - restartall04-compute
+  - restartall05-nextdeploy
+  - scan-ror
+  - setupall00-start
+  - setupall01-puppetmaster
+  - setupall02-ndc2
+  - setupall03-controller
+  - setupall04-neutron
+  - setupall05-glance
+  - setupall06-nova
+  - setupall07-nova2
+  - setupall08-nova3
+  - setupall09-nova4
+  - setupall10-nova5
+  - setupall11-nextdeploy

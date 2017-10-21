@@ -1,0 +1,24 @@
+---
+
+- include_vars: "jobs.yml"
+
+- name: Install some python packages
+  apt: name={{ item }} state=installed update_cache=true force=yes
+  with_items: "{{ packages }}"
+
+- name: Define jenkins jobs
+  jenkins_job:
+    name: "{{ item }}"
+    config: "{{ lookup('file', 'templates/' + item + '.xml') }}"
+    user: "{{ jenkins_admin_user }}"
+    password: "{{ jenkins_admin_password }}"
+  with_items: "{{ jobs }}"
+
+- name: Sync local jenkins config to remote
+  template:
+    src: config.xml
+    dest: /var/lib/jenkins/config.xml
+    owner: jenkins
+    group: jenkins
+    mode: 0644
+  notify: restart jenkins

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.19.1">
+      <projectUrl>https://github.com/ricofehr/nextdeploy/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.4">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@github.com:ricofehr/nextdeploy.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.19.1">
+      <spec></spec>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+
+pushd ror &gt; /dev/null
+sudo gem install brakeman --no-ri --no-rdoc
+brakeman -o ../brakeman-output.tabs
+ret=$?
+popd &gt; /dev/null
+
+exit $ret
+
+cat &gt; w3af-script.w3af &lt;&lt; EOF
+http-settings
+set timeout 5
+set user_agent &quot;This is a security scan.&quot;
+back
+misc-settings
+set max_discovery_time 15
+set fuzz_cookies True
+set fuzz_form_files True
+set fuzz_url_parts True
+set fuzz_url_filenames True
+back
+plugins
+crawl pykto,robots_txt,sitemap_xml,web_spider
+audit blind_sqli,csrf,dav,eval,format_string,generic,os_commanding,sqli,ssi,un_ssl,xss,xst
+infrastructure allowed_methods,domain_dot,dot_net_errors,server_header,server_status
+auth generic
+grep analyze_cookies,code_disclosure,credit_cards,directory_indexing,error_500,error_pages,get_emails,path_disclosure,private_ip,strange_headers,strange_http_codes,strange_parameters,strange_reason
+grep config get_emails
+set only_target_domain False
+back
+output console,text_file
+output config text_file
+set output_file /tmp/test.txt
+set verbose False
+back
+output config console
+set verbose False
+back
+back
+target
+set target http://nextdeploy-prep.nextdeploy.io/
+back
+cleanup
+start
+EOF
+
+/opt/w3af/./w3af_console -s w3af-script.w3af
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.brakeman.BrakemanPublisher plugin="brakeman@0.7">
+      <healthy></healthy>
+      <unHealthy></unHealthy>
+      <thresholdLimit>low</thresholdLimit>
+      <pluginName>[BRAKEMAN] </pluginName>
+      <defaultEncoding>UTF-8</defaultEncoding>
+      <canRunOnFailed>false</canRunOnFailed>
+      <usePreviousBuildAsReference>false</usePreviousBuildAsReference>
+      <useStableBuildAsReference>false</useStableBuildAsReference>
+      <useDeltaValues>false</useDeltaValues>
+      <thresholds plugin="analysis-core@1.76">
+        <unstableTotalAll></unstableTotalAll>
+        <unstableTotalHigh></unstableTotalHigh>
+        <unstableTotalNormal></unstableTotalNormal>
+        <unstableTotalLow></unstableTotalLow>
+        <unstableNewAll></unstableNewAll>
+        <unstableNewHigh></unstableNewHigh>
+        <unstableNewNormal></unstableNewNormal>
+        <unstableNewLow></unstableNewLow>
+        <failedTotalAll></failedTotalAll>
+        <failedTotalHigh></failedTotalHigh>
+        <failedTotalNormal></failedTotalNormal>
+        <failedTotalLow></failedTotalLow>
+        <failedNewAll></failedNewAll>
+        <failedNewHigh></failedNewHigh>
+        <failedNewNormal></failedNewNormal>
+        <failedNewLow></failedNewLow>
+      </thresholds>
+      <shouldDetectModules>false</shouldDetectModules>
+      <dontComputeNew>true</dontComputeNew>
+      <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
+      <outputFile>brakeman-output.tabs</outputFile>
+    </hudson.plugins.brakeman.BrakemanPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>

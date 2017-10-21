@@ -1,0 +1,7 @@
+---
+
+- name: restart jenkins
+  shell: service jenkins restart
+  args:
+    executable: /bin/bash
+  become_user: root

@@ -1,5 +1,19 @@
 ---
 
+- name: Create /home/imgs directory
+  file:
+    path: /home/imgs
+    owner: "{{ ansible_user }}"
+    state: directory
+    mode: 0755
+
+- name: Create /home/pkgs directory
+  file:
+    path: /home/pkgs
+    owner: "{{ ansible_user }}"
+    state: directory
+    mode: 0755
+
 - name: Create /home/repos directory
   file:
     path: /home/repos
@@ -7,7 +21,6 @@
     group: nd
     state: directory
     mode: 0755
-  become_user: root
 
 - name: Create /var/www/doc.nextdeploy.io
   file:
@@ -16,7 +29,6 @@
     group: nd
     state: directory
     mode: 0755
-  become_user: root
 
 - name: Create /var/www/doc.nextdeploy.io/api
   file:
@@ -25,7 +37,6 @@
     group: nd
     state: directory
     mode: 0755
-  become_user: root
 
 - name: Create /var/www/doc.nextdeploy.io/webui
   file:
@@ -34,7 +45,6 @@
     group: nd
     state: directory
     mode: 0755
-  become_user: root
 
 - name: Symbolic /var/www/doc.nextdeploy.io/api/code
   file:
@@ -54,7 +64,7 @@
   git:
     repo: https://github.com/ricofehr/nextdeploy.io
     dest: /home/repos/nextdeploy.io
-  register: ndio_update
+  become_user: nd
   notify:
     - build ndio
 
@@ -63,7 +73,7 @@
     repo: https://github.com/ricofehr/nextdeploy
     dest: /home/repos/nextdeploy
     recursive: no
-  register: nd_update
+  become_user: nd
   notify:
     - build doc nd
 
@@ -71,7 +81,7 @@
   git:
     repo: https://github.com/ricofehr/nextdeploy-webui
     dest: /home/repos/nextdeploy-webui
-  register: ndwebui_update
+  become_user: nd
   notify:
     - build doc webui
 
@@ -79,11 +89,13 @@
   git:
     repo: https://github.com/ricofehr/nextdeploy-sop
     dest: /home/repos/nextdeploy-sop
+  become_user: nd
 
 - name: Deploy nd01 repository
   git:
     repo: https://github.com/ricofehr/ansible-nd01
     dest: /home/repos/ansible-nd01
+  become_user: nd
 
 - name: Create local inventory
   copy:
@@ -91,12 +103,14 @@
              [nd]
              {{ inventory_hostname }}
     dest: /home/repos/ansible-nd01/inventory_local
+    owner: nd
+    group: nd
+    mode: 0644
 
 - name: Check if local secret file exists
   local_action: stat path=".vault_pass.txt"
   register: file
   become: no
-  sudo: no
 
 - name: Copy local secret file to remote if exists
   copy:
@@ -105,60 +119,33 @@
     owner: nd
     group: nd
     mode: 0600
-  become_user: root
   when: file.stat.exists
 
 - name: Insert cron task for build ndio and generate doc
   cron:
     name: "build ndio and docs"
+    user: nd
     minute: "*/30"
     hour: "*"
     job: "cd /home/repos/ansible-nd01 && ansible-playbook -i inventory_local nd.yml --vault-password-file=.vault_pass.txt"
 
-- name: check if imgs repo exists
-  local_action: stat path="assets/imgs"
-  register: folder
+- name: Sync local imgs repo to remote
+  synchronize:
+    src: assets/imgs/
+    dest: /home/imgs/
+    compress: no
+    times: no
+    # set_remote_user: yes
+    # rsync_opts:
+    #   - --ignore-existing
   become: no
-  sudo: no
 
-- name: copy local imgs repo to remote if exists
-  copy:
-    src: assets/imgs
-    dest: /home/imgs
-    owner: nd
-    group: nd
-    mode: 0755
-  become_user: root
-  when: folder.stat.exists
-
-- name: check if pkgs repo exists
-  local_action: stat path="assets/pkgs"
-  register: folder
+- name: Sync local pkgs repo to remote
+  synchronize:
+    src: assets/pkgs/
+    dest: /home/pkgs/
+    times: no
+    # set_remote_user: yes
+    # rsync_opts:
+    #   - --ignore-existing
   become: no
-  sudo: no
-
-- name: copy local pkgs repo to remote if exists
-  copy:
-    src: assets/pkgs
-    dest: /home/pkgs
-    owner: nd
-    group: nd
-    mode: 0755
-  become_user: root
-  when: folder.stat.exists
-
-- name: check if jenkins jobs repo exists
-  local_action: stat path="assets/jobs"
-  register: folder
-  become: no
-  sudo: no
-
-- name: copy local jobs repo to remote if exists
-  copy:
-    src: assets/jobs
-    dest: /var/lib/jenkins/jobs
-    owner: jenkins
-    group: jenkins
-    mode: 0775
-  become_user: root
-  when: folder.stat.exists

@@ -40,3 +40,12 @@
 [submodule "roles/FGtatsuro.virtualbox"]
 	path = roles/FGtatsuro.virtualbox
 	url = https://github.com/FGtatsuro/ansible-virtualbox
+[submodule "roles/logstash"]
+	path = roles/logstash
+	url = https://github.com/geerlingguy/ansible-role-logstash
+[submodule "roles/kibana"]
+	path = roles/kibana
+	url = https://github.com/geerlingguy/ansible-role-kibana
+[submodule "roles/elasticsearch"]
+	path = roles/elasticsearch
+	url = https://github.com/geerlingguy/ansible-role-elasticsearch
