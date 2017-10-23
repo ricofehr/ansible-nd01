@@ -5,15 +5,18 @@
   args:
     chdir: /home/repos/nextdeploy.io
     executable: /bin/bash
+  become_user: nd
 
 - name: build doc nd
   shell: rm -rf vendor/bundle/*;bundle install --path vendor/bundle;./vendor/bundle/ruby/2.3.0/bin/./yardoc lib/**/*.rb app/**/*.rb config/**/*.rb lib/*.rb app/**/api/v1/*.rb
   args:
     chdir: /home/repos/nextdeploy/ror
     executable: /bin/bash
+  become_user: nd
 
 - name: build doc webui
   shell: export PATH=$PATH:/home/nd/npm/bin;npm install; bower install; ember ember-cli-yuidoc
   args:
     chdir: /home/repos/nextdeploy-webui
     executable: /bin/bash
+  become_user: nd
