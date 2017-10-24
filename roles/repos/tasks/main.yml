@@ -68,6 +68,13 @@
   notify:
     - build ndio
 
+- name: Symbolic /var/www/doc.nextdeploy.io/webui/code
+  file:
+    src: /home/repos/nextdeploy.io/dist
+    dest: /var/www/nextdeploy.io
+    state: link
+    force: yes
+
 - name: Deploy nextdeploy repository
   git:
     repo: https://github.com/ricofehr/nextdeploy
