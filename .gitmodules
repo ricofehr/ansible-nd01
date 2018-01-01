@@ -49,3 +49,6 @@
 [submodule "roles/elasticsearch"]
 	path = roles/elasticsearch
 	url = https://github.com/geerlingguy/ansible-role-elasticsearch
+[submodule "roles/openvpn"]
+	path = roles/openvpn
+	url = https://github.com/Stouts/Stouts.openvpn

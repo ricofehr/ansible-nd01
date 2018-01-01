@@ -22,3 +22,6 @@
    - elasticsearch
    - logstash
    - kibana
+   - role: openvpn
+     tags:
+       - vpn
