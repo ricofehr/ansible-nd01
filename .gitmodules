@@ -52,3 +52,6 @@
 [submodule "roles/openvpn"]
 	path = roles/openvpn
 	url = https://github.com/Stouts/Stouts.openvpn
+[submodule "roles/ssh-hardening"]
+	path = roles/ssh-hardening
+	url = https://github.com/dev-sec/ansible-ssh-hardening
